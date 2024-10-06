@@ -1,0 +1,14 @@
+{
+	"properties": [
+		{
+			"name": "base.auth.rc.path",
+			"type": "java.lang.String",
+			"description": "Description for base.auth.rc.path."
+		},
+		{
+			"name": "base.auth.rsa.path",
+			"type": "java.lang.String",
+			"description": "Description for base.auth.rsa.path."
+		}
+	]
+}

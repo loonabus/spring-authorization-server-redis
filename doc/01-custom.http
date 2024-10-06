@@ -1,0 +1,11 @@
+POST http://127.0.0.1:9999/oauth2/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic cmVhZC1jbGllbnQ6cmVhZC1jbGllbnQtc2VjcmV0
+
+grant_type = uip &
+scope = resource:read &
+uip = cmVhZC11c2VyOnJlYWQtdXNlcg==
+
+#read-client:read-client-secret -> cmVhZC1jbGllbnQ6cmVhZC1jbGllbnQtc2VjcmV0
+#admin:admin -> YWRtaW46YWRtaW4=
+#read-user:read-user -> cmVhZC11c2VyOnJlYWQtdXNlcg==

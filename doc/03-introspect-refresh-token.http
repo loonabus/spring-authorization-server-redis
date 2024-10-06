@@ -1,0 +1,14 @@
+POST http://127.0.0.1:9999/oauth2/introspect
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic cmVhZC1jbGllbnQ6cmVhZC1jbGllbnQtc2VjcmV0
+
+token =
+
+##########################################################################################
+
+POST http://127.0.0.1:9999/oauth2/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic cmVhZC1jbGllbnQ6cmVhZC1jbGllbnQtc2VjcmV0
+
+grant_type = refresh_token &
+refresh_token =

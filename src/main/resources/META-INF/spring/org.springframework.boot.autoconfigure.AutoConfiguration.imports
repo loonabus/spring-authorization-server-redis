@@ -1,0 +1,2 @@
+io.doe.config.BaseConfig.RedisTemplateConfig
+io.doe.config.BaseConfig.P6SqlLogMessageFormatConfig

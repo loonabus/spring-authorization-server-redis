@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook">
+		<delay>1500</delay>
+	</shutdownHook>
+
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+	<conversionRule conversionWord="CRLF" converterClass="org.owasp.security.logging.mask.CRLFConverter" />
+
+	<property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}" />
+
+	<property name="ROLLING_PATTERN" value="%d %-25.-25t %.-3p %-25.-25c{0} %-25.-25M %4.4L %CRLF(%msg) %n" />
+	<property name="CONSOLE_PATTERN" value="%d %cyan(%-25.-25t) %highlight(%.-3p) %green(%-25.-25C{0}) %blue(%-25.-25c{0}) %yellow(%-25.-25M) %magenta(%4.4L) %msg %n" />
+
+	<appender name="CONSOLE_LOG" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- withJansi>true</withJansi -->
+		<encoder>
+			<charset>utf8</charset>
+			<pattern>${CONSOLE_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ROLLING_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<charset>utf8</charset>
+			<pattern>${ROLLING_PATTERN}</pattern>
+		</encoder>
+		<file>${LOG_FILE}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<maxFileSize>50MB</maxFileSize>
+			<maxHistory>60</maxHistory>
+			<fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="io.doe" level="DEBUG" />
+	<logger name="HandlerArgumentsLoggingAspect" level="DEBUG" />
+
+	<logger name="org.hibernate.SQL" level="OFF" />
+	<logger name="com.microsoft.sqlserver.jdbc" level="OFF" />
+	<logger name="org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger" level="off" />
+
+	<springProperty scope="context" name="profiles" source="spring.profiles.active" />
+
+	<root level="INFO">
+		<appender-ref ref="ROLLING_LOG" />
+	</root>
+
+	<if condition='p("profiles").contains("local") || p("profiles").replaceAll("logger|server|redis|,", "").trim().equals("")'>
+		<then>
+			<root>
+				<appender-ref ref="CONSOLE_LOG" />
+			</root>
+		</then>
+	</if>
+</configuration>

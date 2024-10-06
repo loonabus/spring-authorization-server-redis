@@ -1,0 +1,71 @@
+buildscript {
+	ext {
+		bootVer = '3.3.1'
+		packagePrefix = 'org.springframework.boot:spring-boot'
+	}
+}
+
+plugins {
+	id 'java'
+	id 'idea'
+	id 'org.springframework.boot' version "${bootVer}"
+}
+
+repositories { mavenCentral(); google(); gradlePluginPortal() }
+
+project.group = 'io.doe'
+project.version = '0.0.1'
+project.description = 'spring authorization server'
+
+java.sourceCompatibility = 21
+java.targetCompatibility = 21
+
+configurations.configureEach { c ->
+	c.exclude([group: 'log4j'])
+	c.exclude([group: 'org.apache.logging.log4j'])
+	c.exclude([group: 'commons-logging', module: 'commons-logging'])
+	c.resolutionStrategy { rs -> rs.preferProjectModules() }
+}
+
+dependencies {
+	implementation platform("${packagePrefix}-dependencies:${bootVer}")
+
+	implementation "${packagePrefix}-starter-actuator"
+	implementation "${packagePrefix}-starter-aop"
+	implementation "${packagePrefix}-starter-data-redis"
+	implementation "${packagePrefix}-starter-data-jpa"
+	implementation "${packagePrefix}-starter-oauth2-authorization-server"
+	implementation "${packagePrefix}-starter-validation"
+	implementation "${packagePrefix}-starter-web"
+
+	implementation 'com.h2database:h2:2.2.224'
+	implementation 'org.apache.commons:commons-pool2:2.12.0'
+	implementation 'com.github.codemonstur:embedded-redis:1.4.3'
+
+	implementation 'org.codehaus.janino:janino:3.1.12'
+	implementation 'org.owasp:security-logging-logback:1.1.7'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
+
+	testImplementation "${packagePrefix}-starter-test"
+
+	implementation 'org.projectlombok:lombok:1.18.32'
+	annotationProcessor 'org.projectlombok:lombok:1.18.32'
+	annotationProcessor "${packagePrefix}-configuration-processor:${bootVer}"
+}
+
+idea { module { downloadSources = true } }
+
+compileJava {
+	inputs.files(processResources)
+	options.compilerArgs.add('-parameters')
+	options.compilerArgs.add('-Amapstruct.defaultComponentModel=spring')
+	options.compilerArgs.add('-Amapstruct.suppressGeneratorTimestamp=true')
+}
+
+jar { enabled = false }
+
+bootJar { archiveFileName = "${rootProject.name}.jar" }
+
+wrapper { gradleVersion = '8.5' }
+
+test { useJUnitPlatform(); maxParallelForks(3) }

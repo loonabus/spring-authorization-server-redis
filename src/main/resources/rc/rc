@@ -1,0 +1,23 @@
+[
+	{
+		"id": "1722474360497-178effe7-dad5-4dfd-bfef-db261b5672f8",
+		"client": "read-client",
+		"secret": "$2a$10$iFf8lHky.gehVImEOOkCMuRimTn20LfoazwGVEDa65JphyhAQNWtm",
+		"methods": ["client_secret_basic"],
+		"grantTypes": ["uip","refresh_token"],
+		"scopes": ["resource:read", "resource:write"],
+		"aTokenMinutes": 60,
+		"rTokenMinutes": 180
+	},
+	{
+		"id": "1722821303448-3c3b0944-4158-4cc1-bc1c-3bc6cade6108",
+		"client": "client",
+		"secret": "$2a$10$cjLY6uSrUvt85Ieoe0NwnefoVkqAGEc2nUgDHe2y2v7sTdntM4bX.",
+		"methods": ["client_secret_basic"],
+		"grantTypes": ["authorization_code","refresh_token"],
+		"scopes": ["resource:read"],
+		"aTokenMinutes": 60,
+		"rTokenMinutes": 180,
+		"redirectUri": "http://127.0.0.1:8888/authorization"
+	}
+]
