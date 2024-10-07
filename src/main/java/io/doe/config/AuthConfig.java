@@ -145,7 +145,7 @@ public class AuthConfig {
 	@Bean
 	@Conditional(EmbedMode.class)
 	public RegisteredClientRepository registeredClientRepo(final Jackson2ObjectMapperBuilder builder) throws IOException {
-		return new InMemoryRegisteredClientRepository(ClientSetting.createRegisteredClientFromFile(builder).toArray(new RegisteredClient[0]));
+		return new InMemoryRegisteredClientRepository(ClientSetting.createRegisteredClientFromFile(builder, props.getRcPath()).toArray(new RegisteredClient[0]));
 	}
 
 	@Bean
@@ -158,7 +158,7 @@ public class AuthConfig {
 	@Conditional(RedisMode.class)
 	public RegisteredClientRepository redisRegisteredClientRepo(
 			final Jackson2ObjectMapperBuilder builder, final RedisTemplate<String, Object> redisTemplate) throws IOException {
-		return new RedisClientRepositories(ClientSetting.createRegisteredClientFromFile(builder), redisTemplate);
+		return new RedisClientRepositories(ClientSetting.createRegisteredClientFromFile(builder, props.getRcPath()), redisTemplate);
 	}
 
 	@Bean

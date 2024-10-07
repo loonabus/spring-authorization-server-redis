@@ -29,8 +29,6 @@ import java.util.stream.Collectors;
 
 class ClientSetting {
 
-	private static final String REGISTERED_CLIENT_FILE_PATH = "classpath:rc/rc";
-
 	private ClientSetting() {
 		throw new UnsupportedOperationException(Constants.UNSUPPORTED_OPERATION_MESSAGE);
 	}
@@ -86,9 +84,9 @@ class ClientSetting {
 		}
 	}
 
-	public static List<RegisteredClient> createRegisteredClientFromFile(final Jackson2ObjectMapperBuilder builder) throws IOException {
+	public static List<RegisteredClient> createRegisteredClientFromFile(final Jackson2ObjectMapperBuilder builder, final String path) throws IOException {
 
-		final String source = Files.readString(ResourceUtils.getFile(REGISTERED_CLIENT_FILE_PATH).toPath(), StandardCharsets.UTF_8);
+		final String source = Files.readString(ResourceUtils.getFile(path).toPath(), StandardCharsets.UTF_8);
 		final List<ClientInfo> ci = builder.build().setPropertyNamingStrategy(PropertyNamingStrategies.LOWER_CAMEL_CASE).readerForListOf(ClientInfo.class).readValue(source);
 
 		ci.forEach(ClientInfo::executeAsserts);
